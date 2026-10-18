@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WhatsApp Scheduler</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>WhatsApp Scheduler</h1>
+    <div id="conn" class="conn" hidden><span class="dot"></span><span id="conn-text">Starting…</span></div>
+  </header>
+
+  <main>
+    <section id="signin" class="card signin" hidden>
+      <h2>Sign in</h2>
+      <form id="signin-form">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+        <div id="signin-error" class="error" hidden></div>
+        <div class="actions"><button type="submit" class="primary">Sign in</button></div>
+      </form>
+    </section>
+
+    <div id="app" hidden>
+      <section id="link" class="card link-card" hidden>
+        <h2>Link your WhatsApp</h2>
+        <p id="link-text">On your phone: WhatsApp → Settings → Linked devices → Link a device, then scan this code.</p>
+        <img id="qr" alt="QR code to link WhatsApp" hidden>
+        <div id="link-status" class="muted" hidden></div>
+
+        <div id="pair" class="pair" hidden>
+          <details>
+            <summary>QR code not working? Link with your phone number instead</summary>
+            <form id="pair-form" class="pair-form">
+              <input id="pair-phone" placeholder="Your number with country code, e.g. +966 50 123 4567" autocomplete="tel">
+              <button type="submit" id="pair-submit" class="primary">Get code</button>
+            </form>
+            <div id="pair-error" class="error" hidden></div>
+            <div id="pair-result" hidden>
+              <div id="pair-code" class="pair-code"></div>
+              <p class="muted">On your phone: tap the WhatsApp notification, or go to Settings → Linked devices →
+                Link a device → <strong>Link with phone number instead</strong>, then enter this code.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 id="form-title">Schedule a message</h2>
+        <form id="form" autocomplete="off">
+          <label for="to">To</label>
+          <div class="picker">
+            <input id="to" placeholder="Search contacts and groups, or type a number with country code">
+            <ul id="suggestions" role="listbox" hidden></ul>
+          </div>
+          <div id="picked" class="picked" hidden></div>
+
+          <label for="body">Message</label>
+          <textarea id="body" rows="4" maxlength="4096" placeholder="Type your message"></textarea>
+
+          <div class="row">
+            <div>
+              <label for="sendAt">When</label>
+              <input id="sendAt" type="datetime-local" required>
+            </div>
+            <div>
+              <label for="repeat">Repeat</label>
+              <select id="repeat">
+                <option value="none">Don't repeat</option>
+                <option value="daily">Every day</option>
+                <option value="weekly">Every week</option>
+                <option value="monthly">Every month</option>
+              </select>
+            </div>
+          </div>
+          <p id="tz-note" class="muted small" hidden></p>
+          <p id="draft-note" class="muted small" hidden>
+            Restored your unsaved draft. <button type="button" id="discard-draft" class="link">Discard</button>
+          </p>
+
+          <div id="form-error" class="error" hidden></div>
+          <div class="actions">
+            <button type="submit" id="submit" class="primary">Schedule</button>
+            <button type="button" id="cancel-edit" class="ghost" hidden>Cancel edit</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="tabs">
+          <button class="tab active" data-tab="upcoming">Upcoming <span id="count-upcoming"></span></button>
+          <button class="tab" data-tab="history">History</button>
+        </div>
+        <ul id="list" class="list"></ul>
+        <p id="empty" class="muted empty" hidden></p>
+      </section>
+
+      <footer>
+        <span id="me" class="muted"></span>
+        <span class="footer-actions">
+          <button id="unlink" class="link" hidden>Unlink WhatsApp</button>
+          <button id="signout" class="link" hidden>Sign out</button>
+        </span>
+      </footer>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
