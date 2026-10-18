@@ -1,0 +1,24 @@
+{
+  "name": "whatsapp-scheduler",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Schedule WhatsApp messages from your personal number",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/index.js",
+    "test": "node --test --test-reporter=spec"
+  },
+  "engines": {
+    "node": ">=22.13"
+  },
+  "dependencies": {
+    "baileys": "7.0.0-rc14",
+    "express": "^5.3.0",
+    "helmet": "^8.3.0",
+    "luxon": "^3.7.2",
+    "pino": "^10.4.0",
+    "qrcode": "^1.5.4"
+  },
+  "license": "MIT"
+}

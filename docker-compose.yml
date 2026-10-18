@@ -1,0 +1,23 @@
+services:
+  whatsapp-scheduler:
+    build: .
+    image: whatsapp-scheduler:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      HOST: 0.0.0.0
+      DATA_DIR: /data
+    # Only reachable from this machine. Put a reverse proxy with HTTPS in front to expose it.
+    ports:
+      - "127.0.0.1:3737:3737"
+    volumes:
+      - scheduler-data:/data
+    stop_grace_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  scheduler-data:
